@@ -76,10 +76,7 @@ It demonstrates a classic multi-tier application architecture.
 * The environment is designed to demonstrate infrastructure automation and service integration.
 
 ---
-
-# Useful Notes
-
-For VMware ESXi users, the following Windows box has been tested and can be useful:
+# Vagrant ESXI boxes
 
 ```bash
   config.vm.box = 'generic/rocky9'
