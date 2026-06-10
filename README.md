@@ -132,7 +132,7 @@ Some package updates and dependency-related issues still occur during provisioni
 
 The NFS server is not working and is causing issues, even though the service is up.
 
-
+---
 # useful commands
 ```bash
 vagrant up     # Create and start a VM.
