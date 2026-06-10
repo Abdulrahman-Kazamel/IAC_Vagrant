@@ -1,0 +1,103 @@
+Vagrant.configure("2") do |config|
+
+  #################################
+  # WEB01
+  #################################
+  config.vm.define "web01" do |web01|
+
+    web01.vm.box = "generic/rocky9"
+    web01.vm.hostname = "web01"
+
+    web01.vm.network "private_network", ip: "192.168.1.90"
+
+    web01.vm.synced_folder(
+      "./web01",
+      "/opt/vagrant",
+      type: "rsync"
+    )
+
+    web01.vm.provider :vmware_esxi do |esxi|
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+    # esxi.esxi_password = 'prompt:'
+    # esxi.esxi_password = 'your_password or use prompt:'
+
+      esxi.esxi_disk_store = "datastore1"
+      esxi.esxi_virtual_network = ["VM Network"]
+
+      esxi.guest_name = "web01"
+      esxi.guest_memsize = "2048"
+      esxi.guest_numvcpus = "2"
+    end
+
+    web01.vm.provision "shell", path: "scripts/web01.sh"
+
+  end
+
+  #################################
+  # WEB02
+  #################################
+  config.vm.define "web02" do |web02|
+
+    web02.vm.box = "generic/ubuntu2204"
+    web02.vm.hostname = "web02"
+
+    web02.vm.network "private_network", ip: "192.168.1.91"
+
+    web02.vm.synced_folder(
+      "./web02",
+      "/opt/vagrant",
+      type: "rsync"
+    )
+
+    web02.vm.provider :vmware_esxi do |esxi|
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+      esxi.esxi_password = "P@ssw0rd"
+
+      esxi.esxi_disk_store = "datastore1"
+      esxi.esxi_virtual_network = ["VM Network"]
+
+      esxi.guest_name = "web02"
+      esxi.guest_memsize = "2048"
+      esxi.guest_numvcpus = "2"
+    end
+
+    web02.vm.provision "shell", path: "scripts/web02.sh"
+
+  end
+
+  #################################
+  # DB01
+  #################################
+  config.vm.define "db01" do |db01|
+
+    db01.vm.box = "generic/ubuntu2204"
+    db01.vm.hostname = "db01"
+
+    db01.vm.network "private_network", ip: "192.168.1.92"
+
+    db01.vm.synced_folder(
+      "./db01",
+      "/opt/vagrant",
+      type: "rsync"
+    )
+
+    db01.vm.provider :vmware_esxi do |esxi|
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+      esxi.esxi_password = "P@ssw0rd"
+
+      esxi.esxi_disk_store = "datastore1"
+      esxi.esxi_virtual_network = ["VM Network"]
+
+      esxi.guest_name = "db01"
+      esxi.guest_memsize = "4096"
+      esxi.guest_numvcpus = "2"
+    end
+
+    db01.vm.provision "shell", path: "scripts/db01.sh"
+
+  end
+
+end

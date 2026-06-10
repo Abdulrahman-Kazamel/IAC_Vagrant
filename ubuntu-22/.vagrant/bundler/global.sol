@@ -1,0 +1,1 @@
+{"dependencies":[["vagrant-hostmanager",["= 1.8.10"]],["racc",["~> 1.4"]],["nokogiri",["~> 1.6"]],["iniparse",["> 1.0"]],["log4r",["~> 1.1"]],["concurrent-ruby",["~> 1.0"]],["i18n",["~> 1.8"]],["vagrant-vmware-esxi",["= 2.5.5"]]],"checksum":"1724de2531a978033d14dd35b90745498fd576cc808bcf22cd531cd1dc3d608c","vagrant_version":"2.4.9"}

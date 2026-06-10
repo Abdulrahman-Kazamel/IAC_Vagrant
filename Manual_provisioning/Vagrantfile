@@ -1,0 +1,119 @@
+Vagrant.configure("2") do |config|
+
+ # Hostmanager Configuration
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true   # Updates your local machine's /etc/hosts file
+ config.hostmanager.manage_guest = true   # Updates the guest VM's /etc/hosts file
+# config.vm.boot_timeout = 600
+# config.vm.graceful_halt_timeout = 60
+# config.vm.boot_timeout_retry = 5
+### DB vm  ####
+  config.vm.define "db01" do |db01|
+    db01.vm.box = "generic/rocky9"
+    db01.vm.hostname = "db01"
+
+    db01.vm.network "private_network", ip: "192.168.1.150"
+    db01.vm.synced_folder( "./db01", "/opt/vagrant", type: "rsync")
+
+    db01.vm.provision "shell", path: "scripts/db.sh" , run: "always"
+
+
+      db01.vm.provider "vmware_esxi" do |esxi|
+        esxi.guest_memsize= "600"
+        esxi.esxi_hostname = "esxi"
+        esxi.esxi_username = "root"
+        esxi.esxi_password = "P@ssw0rd"
+        esxi.esxi_disk_store = "datastore1"
+        # esxi.esxi_virtual_network = ["VM Network"]
+        esxi.guest_name = "db01"
+        esxi.guest_numvcpus = "1"
+      end
+  end
+  
+### Memcache vm  #### 
+  config.vm.define "mc01" do |mc01|
+    mc01.vm.box = "generic/rocky9"
+    mc01.vm.hostname = "mc01"
+   
+    mc01.vm.network "private_network", ip: "192.168.1.140"
+    mc01.vm.synced_folder( "./mc01", "/opt/vagrant",type: "rsync")
+
+    mc01.vm.provision "shell", path: "scripts/mc01.sh" , run: "always"
+        
+    mc01.vm.provider "vmware_esxi" do |esxi|
+        esxi.guest_memsize= "600"
+        esxi.esxi_hostname = "esxi"
+        esxi.esxi_username = "root"
+        esxi.esxi_password = "P@ssw0rd"
+        esxi.esxi_disk_store = "datastore1"
+       
+        # esxi.esxi_virtual_network = ["VM Network"]
+        esxi.guest_name = "mc01"
+        esxi.guest_numvcpus = "1"
+      end
+  end
+  
+### RabbitMQ vm  ####
+  config.vm.define "rmq01" do |rmq01|
+    rmq01.vm.box = "generic/rocky9"
+    rmq01.vm.hostname = "rmq01"
+    rmq01.vm.network "private_network", ip: "192.168.1.130"
+    rmq01.vm.synced_folder("./rmq01", "/opt/vagrant",type: "rsync")
+
+    rmq01.vm.provision "shell", path: "scripts/rmq01.sh" , run: "always"
+    
+    rmq01.vm.provider "vmware_esxi" do |esxi|
+      esxi.guest_memsize= "600"
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+      esxi.esxi_password = "P@ssw0rd"
+      esxi.esxi_disk_store = "datastore1"
+      # esxi.esxi_virtual_network = ["VM Network"]
+      esxi.guest_name = "rmq01"
+      esxi.guest_numvcpus = "1"
+    end
+  end
+  
+### tomcat vm ###
+   config.vm.define "app01" do |app01|
+    app01.vm.box = "generic/rocky9"
+    app01.vm.hostname = "app01"
+    app01.vm.network "private_network", ip: "192.168.1.120"
+    app01.vm.synced_folder("./app01", "/opt/vagrant",type: "rsync")
+    app01.vm.provision "shell", path: "scripts/app01.sh" , run: "always"
+    
+    app01.vm.provider "vmware_esxi" do |esxi|
+      esxi.guest_memsize= "800"
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+      esxi.esxi_password = "P@ssw0rd"
+      esxi.esxi_disk_store = "datastore1"
+      esxi.esxi_virtual_network = ["VM Network"]
+      esxi.guest_name = "app01"
+      esxi.guest_numvcpus = "1"
+    end
+   end
+   
+  
+### Nginx VM ###
+
+
+config.vm.define "web01" do |web01|
+    web01.vm.box = "generic/rocky9"
+    web01.vm.hostname = "web01"
+    web01.vm.network "private_network", ip: "192.168.1.110"
+    web01.vm.synced_folder("./web01","/opt/vagrant",type: "rsync")
+    web01.vm.provision "shell", path: "scripts/web01.sh" , run: "always"
+
+    web01.vm.provider "vmware_esxi" do |esxi|
+      esxi.guest_memsize= "800"
+      esxi.esxi_hostname = "esxi"
+      esxi.esxi_username = "root"
+      esxi.esxi_password = "P@ssw0rd"
+      esxi.esxi_disk_store = "datastore1"
+      # esxi.esxi_virtual_network = ["VM Network"]
+      esxi.guest_name = "web01"
+      esxi.guest_numvcpus = "1"
+    end
+  end 
+end

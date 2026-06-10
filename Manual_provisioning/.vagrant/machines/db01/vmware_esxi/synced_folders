@@ -1,0 +1,1 @@
+{"rsync":{"/opt/vagrant":{"type":"rsync","guestpath":"/opt/vagrant","hostpath":"/home/kazamel/Documents/projects/full_project/vagrant/Manual_provisioning/db01","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

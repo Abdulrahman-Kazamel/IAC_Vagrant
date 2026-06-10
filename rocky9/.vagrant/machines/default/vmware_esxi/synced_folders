@@ -1,0 +1,1 @@
+{"rsync":{"/var/www/html/":{"type":"rsync","guestpath":"/var/www/html","hostpath":"/home/kazamel/Documents/projects/vagrant/portoflio-rocky9/portfolio","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

@@ -1,0 +1,70 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "bento/ubuntu-20.04"
+
+  config.vm.provider :vmware_esxi do |esxi|
+    esxi.esxi_hostname = 'esxi'
+    esxi.esxi_username = 'root'
+    # esxi.esxi_password = 'prompt:'
+    # esxi.esxi_password = 'your_password or use prompt:'
+    esxi.esxi_disk_store = "datastore1"
+    esxi.esxi_virtual_network = ["VM Network"]
+
+
+
+
+    # Customize the amount of memory on the VM:
+
+    esxi.guest_memsize = '2048'
+    esxi.guest_numvcpus = '2'
+    esxi.guest_name = "ubuntu-20.04"
+   end
+
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # NOTE: This will enable public access to the opened port
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.1.60"
+
+  config.vm.network "public_network"
+ 
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  config.vm.synced_folder "/home/kazamel/Documents/projects/vagrant/ubuntu-20" , "/opt/vagrant", type: "rsync"
+
+
+
+
+  #/home/kazamel/Documents/projects/vagrant/ubuntu-20
+
+
+  # Provision the machine with a shell script. Additional provisioners such as  
+  config.vm.provision "shell", inline: <<-SHELL
+     #!/bin/bash
+     sudo apt-get update -y
+     sudo apt-get upgrade -y
+     mkdir -p /opt/vagrant
+     free -m >> /opt/vagrant/ram.txt
+     df -h >> /opt/vagrant/disk.txt
+  #   apt-get update
+  #   apt-get install -y apache2
+
+    ##   !/bin/bash
+    # sudo apt-get update
+    # sudo apt-get install -y docker.io docker-compose
+    # sudo usermod -aG docker vagrant
+    # sudo apt install make -y
+
+
+
+  SHELL
+end

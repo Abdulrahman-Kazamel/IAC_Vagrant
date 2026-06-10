@@ -1,0 +1,9 @@
+
+==> web01: --- Starting graceful shutdown...
+==> web01: --- Waiting for state "powered_off"
+==> web01: --- Success, state is now "powered_off"
+==> web01: Virtual Machine is already built.
+==> web01: --- VM has been Powered On...
+==> web01: --- Waiting for state "running"
+==> web01: --- Success, state is now "running"
+==> web01: Setting hostname...
