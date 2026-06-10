@@ -61,11 +61,11 @@ The `vprofile` directory contains the most complete and advanced project in this
 It demonstrates a classic multi-tier application architecture.
 
 ## Architecture
-  1- Nginx: Acts as a reverse proxy and forwards incoming requests to Tomcat.
-  2- Tomcat: Hosts and runs the Java web application.
-  3- MySQL: Stores application data and handles database operations.
-  4- RabbitMQ: Provides message queuing and workload distribution between services.
-  5- Memcached: Caches frequently requested data to reduce database load and improve application response times.
+  * Nginx: Acts as a reverse proxy and forwards incoming requests to Tomcat.
+  * Tomcat: Hosts and runs the Java web application.
+  * MySQL: Stores application data and handles database operations.
+  * RabbitMQ: Provides message queuing and workload distribution between services.
+  * Memcached: Caches frequently requested data to reduce database load and improve application response times.
 
 ---
 
