@@ -132,6 +132,8 @@ The NFS server is not working and is causing issues, even though the service is 
 ---
 # useful commands
 ```bash
+vagrant init
+vagrant init boxName # vagrant init hashicorp/bionic64
 vagrant up     # Create and start a VM.
 vagrant halt    # Gracefully stop a VM.
 vagrant reload # Restart a VM.
