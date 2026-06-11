@@ -7,6 +7,16 @@ set -euo pipefail
 
 #yum update -y
 
+
+#### script Variables.
+PACKAGES="httpd wget vim unzip"
+URL="https://www.tooplate.com/zip-templates/2103_central.zip"
+ARTIFACT_NAME="2103_central"
+MAIN_SVC="httpd"
+
+
+
+
 echo "############################# updating repo list.... ##########################"
 sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Base.repo
 sed -i 's/#baseurl=http:\/\/mirror.centos.org/baseurl=https:\/\/vault.centos.org/g' /etc/yum.repos.d/CentOS-Base.repo
@@ -21,12 +31,12 @@ df -h >> /opt/vagrant/disk.txt
 
 
 echo "############################# installing project dependancies... ##########################"
-yum install httpd wget vim unzip  -y > /dev/null
+yum install $PACKAGES  -y > /dev/null
 
 
 echo "###########################   enabling mandatory services...    ##########################"
 
-if ! systemctl is-active httpd; then
+if ! systemctl is-active $MAIN_SVC; then
       systemctl enable  --now httpd
 fi
 
@@ -37,15 +47,16 @@ fi
 
 echo "###########################  downloading project repo...    ##########################"
 cd /tmp
-wget -o 2103_central.zip https://www.tooplate.com/zip-templates/2103_central.zip > /dev/null
+rm -rf $ARTIFACT_NAME
+wget -O $ARTIFACT_NAME.zip $URL > /dev/null
 
-unzip 2103_central.zip > /dev/null
-cp -r 2103_central/* /var/www/html/ 
+unzip $ARTIFACT_NAME.zip > /dev/null
+cp -r $ARTIFACT_NAME/* /var/www/html/ 
 
 
 
 echo "########################### restarting firewall & http service...  ##########################"
-systemctl restart httpd  
+systemctl restart $MAIN_SVC 
 
 
 firewall-cmd --add-port=80/tcp --permanent
