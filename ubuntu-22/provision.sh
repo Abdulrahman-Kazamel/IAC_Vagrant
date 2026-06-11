@@ -35,7 +35,17 @@ df -h >> /opt/vagrant/disk.txt
 
 
 # To run the docker compose file, you can use the following commands:
+# ################################## first micro service app  #######################
 #  wget https://raw.githubusercontent.com/devopshydclub/vprofile-project/docker/compose/docker-compose.yml
 #  sudo usermod -a -G docker $USER
 # newgrp docker
 # docker compose up -d
+#
+
+
+#################diffrent microservice app for more testing purpose################
+
+#git clone https://github.com/devopshydclub/emartapp.git
+#cd emartapp
+#docker compose up
+
